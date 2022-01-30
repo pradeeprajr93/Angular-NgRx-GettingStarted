@@ -1,43 +1,45 @@
-<div class="card" *ngIf="(productState$ | async) as productState">
-  <div class="card-header">
-    {{pageTitle}}
-  </div>
-
-  <div class="card-body"
-       *ngIf="products?.length">
-    <div class="list-group">
-      <button class="list-group-item list-group-item-action rounded-0"
-              *ngFor="let product of products"
-              [ngClass]="{'active': product?.id === selectedProduct?.id}"
-              (click)="productSelected(product)">{{ product.productName }}
-        <ng-container *ngIf="productState.showProductCode">
-          ({{ product.productCode }})
-        </ng-container>
-      </button>
+<ng-container *ngrxLet="(showProductCode$) as showProductCode">
+  <div class="card">
+    <div class="card-header">
+      {{pageTitle}}
     </div>
-  </div>
 
-  <div class="card-footer">
-    <div class="row">
-      <div class="form-check col-md-7">
-        <label>
-          <input class="form-check-input"
-                 type="checkbox"
-                 (change)="checkChanged()"
-                 [checked]="productState.showProductCode">
-          Display Product Code
-        </label>
-      </div>
-      <div class="col-md-4 text-right">
-        <button class="btn btn-primary"
-                (click)="newProduct()">
-          Add
+    <div class="card-body"
+         *ngIf="products?.length">
+      <div class="list-group">
+        <button class="list-group-item list-group-item-action rounded-0"
+                *ngFor="let product of products"
+                [ngClass]="{'active': product?.id === selectedProduct?.id}"
+                (click)="productSelected(product)">{{ product.productName }}
+          <ng-container *ngIf="showProductCode">
+            ({{ product.productCode }})
+          </ng-container>
         </button>
       </div>
     </div>
+
+    <div class="card-footer">
+      <div class="row">
+        <div class="form-check col-md-7">
+          <label>
+            <input class="form-check-input"
+                   type="checkbox"
+                   (change)="checkChanged()"
+                   [checked]="showProductCode">
+            Display Product Code
+          </label>
+        </div>
+        <div class="col-md-4 text-right">
+          <button class="btn btn-primary"
+                  (click)="newProduct()">
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<div *ngIf="errorMessage"
-     class="alert alert-danger">
-  Error: {{ errorMessage }}
-</div>
+  <div *ngIf="errorMessage"
+       class="alert alert-danger">
+    Error: {{ errorMessage }}
+  </div>
+</ng-container>

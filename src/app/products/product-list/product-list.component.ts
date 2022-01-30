@@ -1,3 +1,4 @@
+import { getShowProductCode } from './../state/product.reducer';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 
@@ -16,7 +17,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle = 'Products';
   errorMessage: string;
   products: Product[];
-  productState$: Observable<ProductState>;
+  showProductCode$: Observable<boolean>;
 
   // Used to highlight the selected product in the list
   selectedProduct: Product | null;
@@ -37,7 +38,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       error: err => this.errorMessage = err
     });
 
-    this.productState$ = this.store.select('products');
+    this.showProductCode$ = this.store.select(getShowProductCode);
   }
 
   ngOnDestroy(): void {
